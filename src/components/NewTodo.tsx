@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
-
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 interface newTodoInterface {
   newTodoCreaterHandler: (extra: string) => void;
 }
@@ -11,10 +12,27 @@ const NewTodo: React.FC<newTodoInterface> = (props) => {
     const enteredText = textInputRef.current!.value;
     props.newTodoCreaterHandler(enteredText);
     textInputRef.current!.value = "";
+    if (enteredText.length === 0) {
+      toast.error("Please Enter a TODO");
+    } else {
+      toast.success("TODO created");
+    }
   };
 
   return (
     <form onSubmit={handleSubmit} className="w-1/4 m-auto ">
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <div className="pt-36">
         <label htmlFor="text" className="block text-green-700">
           Enter TODO
